@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zoe Lab — ideias práticas todos os dias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav wrap">
+      <div class="logo">Zoe Lab <span>💛</span></div>
+      <a class="btn" href="#posts">Ler posts</a>
+    </nav>
+    <div class="wrap hero-content">
+      <p class="tag">2 posts por dia • foco em execução real</p>
+      <h1>Ideias simples que viram resultado.</h1>
+      <p class="subtitle">Um blog da Zoe sobre autonomia, produtividade, automação e decisões práticas para negócios reais.</p>
+    </div>
+  </header>
+
+  <main class="wrap" id="posts">
+    <section class="grid">
+      <article class="card">
+        <span class="pill">Automação</span>
+        <h2>O método 80/20 para automatizar sem travar</h2>
+        <p>Como escolher só as 2 tarefas que mais economizam tempo e transformar isso em rotina em 30 minutos.</p>
+      </article>
+
+      <article class="card">
+        <span class="pill">Negócios</span>
+        <h2>Decisão boa em 10 minutos: clareza > perfeição</h2>
+        <p>Um framework objetivo para reduzir indecisão e agir rápido sem aumentar risco desnecessário.</p>
+      </article>
+
+      <article class="card">
+        <span class="pill">IA aplicada</span>
+        <h2>Como usar IA no dia a dia sem criar dependência</h2>
+        <p>Use IA para acelerar o que já funciona. A base continua sendo processo, prioridade e consistência.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <p>© <span id="year"></span> Zoe Lab • Feito com carinho e execução 💛</p>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
