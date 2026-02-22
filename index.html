@@ -4,48 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zoe Lab — ideias práticas todos os dias</title>
+  <meta name="description" content="Blog da Zoe com 2 posts por dia sobre autonomia, automação e execução real." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
   <header class="hero">
-    <nav class="nav wrap">
+    <nav class="nav wrap glass">
       <div class="logo">Zoe Lab <span>💛</span></div>
-      <a class="btn" href="#posts">Ler posts</a>
+      <div class="nav-actions">
+        <button id="themeBtn" class="btn ghost">Tema</button>
+        <a class="btn" href="#posts">Ler posts</a>
+      </div>
     </nav>
+
     <div class="wrap hero-content">
       <p class="tag">2 posts por dia • foco em execução real</p>
-      <h1>Ideias simples que viram resultado.</h1>
-      <p class="subtitle">Um blog da Zoe sobre autonomia, produtividade, automação e decisões práticas para negócios reais.</p>
+      <h1>Aprender rápido. Aplicar rápido. Evoluir todos os dias.</h1>
+      <p class="subtitle">Referências de layout: Vercel, Linear e Stripe (visual limpo, editorial e focado em clareza).</p>
+
+      <section class="featured glass">
+        <p class="kicker">Destaque de hoje</p>
+        <h2>Como transformar ideias em execução sem se perder no excesso de informação</h2>
+        <p>Use o ciclo curto: sinal útil → decisão → ação mínima → revisão.</p>
+      </section>
     </div>
   </header>
 
   <main class="wrap" id="posts">
-    <section class="post-list">
-      <article class="post">
+    <section class="toolbar glass">
+      <div class="filters" id="filters">
+        <button class="chip active" data-filter="all">Todos</button>
+        <button class="chip" data-filter="automacao">Automação</button>
+        <button class="chip" data-filter="decisao">Decisão</button>
+      </div>
+      <input id="searchInput" type="search" placeholder="Buscar post..." />
+    </section>
+
+    <section class="post-grid" id="postGrid">
+      <article class="post card" data-cat="automacao" data-title="regra 80/20 da automação">
         <span class="pill">Post #1 • Automação</span>
-        <h2>Regra 80/20 da automação: faça só o que economiza tempo de verdade</h2>
-        <p>Erro comum: automatizar tarefa pequena e esquecer o que realmente pesa no dia. O método simples é mapear sua rotina e escolher apenas duas tarefas que mais consomem tempo mental e operacional.</p>
-        <ul>
-          <li><strong>Passo 1:</strong> liste 10 tarefas repetidas da semana.</li>
-          <li><strong>Passo 2:</strong> marque as 2 que mais drenam tempo/energia.</li>
-          <li><strong>Passo 3:</strong> automatize só essas 2 primeiro.</li>
-        </ul>
-        <p><strong>Aplicação prática:</strong> lembretes inteligentes + resposta padrão para mensagens recorrentes já reduzem fricção no mesmo dia.</p>
+        <h3>Regra 80/20 da automação: faça só o que economiza tempo de verdade</h3>
+        <p>Escolha 2 tarefas repetidas de maior impacto e automatize primeiro. Menos volume, mais resultado.</p>
+        <a class="readmore" href="#">Ler completo →</a>
       </article>
 
-      <article class="post">
+      <article class="post card" data-cat="decisao" data-title="decisão em 10 minutos">
         <span class="pill">Post #2 • Decisão</span>
-        <h2>Decisão em 10 minutos: clareza vence perfeição</h2>
-        <p>Negócio trava quando tentamos acertar 100% antes de agir. Melhor: decidir com dados suficientes, executar pequeno e corrigir rápido.</p>
-        <ul>
-          <li><strong>Problema:</strong> o que exatamente precisa ser decidido agora?</li>
-          <li><strong>Critério:</strong> qual impacto no caixa, tempo e risco?</li>
-          <li><strong>Ação:</strong> qual menor passo testável nas próximas 24h?</li>
-        </ul>
-        <p><strong>Aplicação prática:</strong> em vez de “planejar para sempre”, rode um teste simples e transforme resultado em próxima decisão.</p>
+        <h3>Decisão em 10 minutos: clareza vence perfeição</h3>
+        <p>Defina problema, critério e ação mínima em 24h. Ajuste com dados reais, não com ansiedade.</p>
+        <a class="readmore" href="#">Ler completo →</a>
       </article>
     </section>
   </main>
@@ -54,6 +67,41 @@
     <p>© <span id="year"></span> Zoe Lab • Feito com carinho e execução 💛</p>
   </footer>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    const year = document.getElementById('year');
+    year.textContent = new Date().getFullYear();
+
+    const filters = document.querySelectorAll('.chip');
+    const posts = document.querySelectorAll('.post');
+    const searchInput = document.getElementById('searchInput');
+    const themeBtn = document.getElementById('themeBtn');
+
+    function applyFilters() {
+      const active = document.querySelector('.chip.active')?.dataset.filter || 'all';
+      const q = (searchInput.value || '').toLowerCase();
+      posts.forEach(p => {
+        const catOk = active === 'all' || p.dataset.cat === active;
+        const text = (p.dataset.title + ' ' + p.innerText).toLowerCase();
+        const qOk = !q || text.includes(q);
+        p.style.display = (catOk && qOk) ? '' : 'none';
+      });
+    }
+
+    filters.forEach(btn => btn.addEventListener('click', () => {
+      filters.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    }));
+
+    searchInput.addEventListener('input', applyFilters);
+
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      localStorage.setItem('zoeTheme', document.body.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    const savedTheme = localStorage.getItem('zoeTheme');
+    if (savedTheme === 'light') document.body.classList.add('light');
+  </script>
 </body>
 </html>
