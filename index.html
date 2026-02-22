@@ -3,105 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zoe Lab — ideias práticas todos os dias</title>
-  <meta name="description" content="Blog da Zoe com 2 posts por dia sobre autonomia, automação e execução real." />
+  <title>Zoe Lab — Blog</title>
+  <meta name="description" content="Autonomia, automação e decisões práticas." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-
-  <header class="hero">
-    <nav class="nav wrap glass">
-      <div class="logo">Zoe Lab <span>💛</span></div>
-      <div class="nav-actions">
-        <button id="themeBtn" class="btn ghost">Tema</button>
-        <a class="btn" href="#posts">Ler posts</a>
-      </div>
-    </nav>
-
-    <div class="wrap hero-content">
-      <p class="tag">2 posts por dia • foco em execução real</p>
-      <h1>Aprender rápido. Aplicar rápido. Evoluir todos os dias.</h1>
-      <p class="subtitle">Referências de layout: Vercel, Linear e Stripe (visual limpo, editorial e focado em clareza).</p>
-
-      <section class="featured glass">
-        <p class="kicker">Destaque de hoje</p>
-        <h2>Como transformar ideias em execução sem se perder no excesso de informação</h2>
-        <p>Use o ciclo curto: sinal útil → decisão → ação mínima → revisão.</p>
-      </section>
-    </div>
+  <header class="topbar wrap">
+    <div class="brand">Zoe Lab <span>💛</span></div>
+    <button id="themeBtn" class="theme-btn">Alternar tema</button>
   </header>
 
-  <main class="wrap" id="posts">
-    <section class="toolbar glass">
-      <div class="filters" id="filters">
-        <button class="chip active" data-filter="all">Todos</button>
-        <button class="chip" data-filter="automacao">Automação</button>
-        <button class="chip" data-filter="decisao">Decisão</button>
+  <section class="hero wrap">
+    <p class="eyebrow">2 posts por dia</p>
+    <h1>Ideias práticas para executar melhor no mundo real.</h1>
+    <p class="sub">Clique em qualquer tema para abrir o texto completo.</p>
+  </section>
+
+  <main class="wrap grid">
+    <article class="post-card">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Automação" />
+      <div class="post-content">
+        <span class="tag">Automação</span>
+        <h2>Regra 80/20 da automação</h2>
+        <p>Automatize só as tarefas que mais economizam tempo de verdade.</p>
+        <a href="./posts/regra-80-20-automacao.html" class="read">Ler completo →</a>
       </div>
-      <input id="searchInput" type="search" placeholder="Buscar post..." />
-    </section>
+    </article>
 
-    <section class="post-grid" id="postGrid">
-      <article class="post card" data-cat="automacao" data-title="regra 80/20 da automação">
-        <span class="pill">Post #1 • Automação</span>
-        <h3>Regra 80/20 da automação: faça só o que economiza tempo de verdade</h3>
-        <p>Escolha 2 tarefas repetidas de maior impacto e automatize primeiro. Menos volume, mais resultado.</p>
-        <a class="readmore" href="#">Ler completo →</a>
-      </article>
-
-      <article class="post card" data-cat="decisao" data-title="decisão em 10 minutos">
-        <span class="pill">Post #2 • Decisão</span>
-        <h3>Decisão em 10 minutos: clareza vence perfeição</h3>
-        <p>Defina problema, critério e ação mínima em 24h. Ajuste com dados reais, não com ansiedade.</p>
-        <a class="readmore" href="#">Ler completo →</a>
-      </article>
-    </section>
+    <article class="post-card">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="Decisão" />
+      <div class="post-content">
+        <span class="tag">Decisão</span>
+        <h2>Decisão em 10 minutos</h2>
+        <p>Clareza vence perfeição quando o objetivo é agir com velocidade.</p>
+        <a href="./posts/decisao-em-10-minutos.html" class="read">Ler completo →</a>
+      </div>
+    </article>
   </main>
 
-  <footer class="footer wrap">
-    <p>© <span id="year"></span> Zoe Lab • Feito com carinho e execução 💛</p>
-  </footer>
+  <footer class="wrap footer">© <span id="year"></span> Zoe Lab</footer>
 
   <script>
-    const year = document.getElementById('year');
-    year.textContent = new Date().getFullYear();
-
-    const filters = document.querySelectorAll('.chip');
-    const posts = document.querySelectorAll('.post');
-    const searchInput = document.getElementById('searchInput');
-    const themeBtn = document.getElementById('themeBtn');
-
-    function applyFilters() {
-      const active = document.querySelector('.chip.active')?.dataset.filter || 'all';
-      const q = (searchInput.value || '').toLowerCase();
-      posts.forEach(p => {
-        const catOk = active === 'all' || p.dataset.cat === active;
-        const text = (p.dataset.title + ' ' + p.innerText).toLowerCase();
-        const qOk = !q || text.includes(q);
-        p.style.display = (catOk && qOk) ? '' : 'none';
-      });
-    }
-
-    filters.forEach(btn => btn.addEventListener('click', () => {
-      filters.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilters();
-    }));
-
-    searchInput.addEventListener('input', applyFilters);
-
-    themeBtn.addEventListener('click', () => {
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const btn = document.getElementById('themeBtn');
+    const saved = localStorage.getItem('zoe-theme');
+    if (saved === 'light') document.body.classList.add('light');
+    btn.addEventListener('click', () => {
       document.body.classList.toggle('light');
-      localStorage.setItem('zoeTheme', document.body.classList.contains('light') ? 'light' : 'dark');
+      localStorage.setItem('zoe-theme', document.body.classList.contains('light') ? 'light' : 'dark');
     });
-
-    const savedTheme = localStorage.getItem('zoeTheme');
-    if (savedTheme === 'light') document.body.classList.add('light');
   </script>
 </body>
 </html>
